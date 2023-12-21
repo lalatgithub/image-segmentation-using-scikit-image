@@ -39,8 +39,8 @@ label_image = label(cleared)
 # and leave `bg_color` as `None` and `kind` as `overlay`
 image_label_overlay = label2rgb(label_image, image=image, bg_label=0)
 
-fig, ax = plt.subplots(figsize=(10, 6))
-ax.imshow(image_label_overlay)
+fig, ax = plt.subplots(1, 2, figsize=(15, 6))
+ax[1].imshow(image_label_overlay)
 
 for region in regionprops(label_image):
     # take regions with large enough areas
@@ -49,8 +49,9 @@ for region in regionprops(label_image):
         minr, minc, maxr, maxc = region.bbox
         rect = mpatches.Rectangle((minc, minr), maxc - minc, maxr - minr,
                                   fill=False, edgecolor='red', linewidth=2)
-        ax.add_patch(rect)
+        ax[1].add_patch(rect)
 
-ax.set_axis_off()
-plt.tight_layout()
+ax[0].imshow(image)
+ax[0].set_title("Original")
+ax[1].set_title("Segmented")
 plt.show()
